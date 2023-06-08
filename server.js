@@ -18,6 +18,9 @@ app.use(express.static('client/build'));
 
 //routes implement
 readdirSync("./routes").map(r=>app.use("/api/v1",require(`./routes/${r}`)));
+app.get('*',function (req,res) {
+    res.sendFile(path.resolve(__dirname,'client','build','index.html'))
+})
 
 //server connection
 const port=process.env.PORT || 8000;
@@ -31,6 +34,3 @@ mongoose.connect(process.env.DATABASE)
         })
         .catch((error)=> console.log(error));
 
-app.get('*',function (req,res) {
-    res.sendFile(path.resolve(__dirname,'client','build','index.html'))
-})
